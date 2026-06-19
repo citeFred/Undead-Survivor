@@ -9200,9 +9200,10 @@ GameObject:
   - component: {fileID: 887536853}
   - component: {fileID: 887536852}
   - component: {fileID: 887536854}
+  - component: {fileID: 887536855}
   m_Layer: 0
   m_Name: Enemy 0
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9275,7 +9276,7 @@ Transform:
   m_GameObject: {fileID: 887536848}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7324212, y: -0.51658005, z: 0}
+  m_LocalPosition: {x: 4.25, y: -0.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9382,6 +9383,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   speed: 2
   target: {fileID: 1305506603}
+--- !u!114 &887536855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887536848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd0ab8617a75de84a840a6dacfb3d667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Reposition
 --- !u!1 &1305506602
 GameObject:
   m_ObjectHideFlags: 0
