@@ -4511,6 +4511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4594ff98d19ce944483232643551420a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  spawnPoint: []
 --- !u!1 &437345186
 GameObject:
   m_ObjectHideFlags: 0
@@ -13999,6 +14000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 1305506608}
+  pool: {fileID: 225987678}
 --- !u!4 &1907223003
 Transform:
   m_ObjectHideFlags: 0
