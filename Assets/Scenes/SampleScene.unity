@@ -4420,6 +4420,55 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &216507542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 216507543}
+  - component: {fileID: 216507544}
+  m_Layer: 0
+  m_Name: Weapon (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &216507543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216507542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1305506605}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &216507544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216507542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5f8da768c26bd4ab997954eb4fc225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  id: 1
+  prefabId: 2
+  damage: 10
+  count: 0
+  speed: 0
 --- !u!1 &225987677
 GameObject:
   m_ObjectHideFlags: 0
@@ -4452,6 +4501,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 5003311898502347265, guid: 040c53e0026df5e4fb2c13251535aae4, type: 3}
   - {fileID: 2127004963189683042, guid: 1bec7038269c86a41bfe3611ae6f2076, type: 3}
+  - {fileID: 92382141017623226, guid: 4abef79e4593df844bdc8475c123b5f4, type: 3}
 --- !u!4 &225987679
 Transform:
   m_ObjectHideFlags: 0
@@ -9356,6 +9406,7 @@ GameObject:
   - component: {fileID: 1305506608}
   - component: {fileID: 1305506607}
   - component: {fileID: 1305506609}
+  - component: {fileID: 1305506610}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -9466,6 +9517,7 @@ Transform:
   - {fileID: 1417268204}
   - {fileID: 351432437}
   - {fileID: 1623534015}
+  - {fileID: 216507543}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1305506606
@@ -9549,6 +9601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   inputVec: {x: 0, y: 0}
   speed: 4
+  scanner: {fileID: 0}
 --- !u!95 &1305506609
 Animator:
   serializedVersion: 7
@@ -9571,6 +9624,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1305506610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305506602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f7d28e10074f008201f65184fdd2a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Scanner
+  scanRange: 5
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  nearestTarget: {fileID: 0}
 --- !u!1 &1390006915
 GameObject:
   m_ObjectHideFlags: 0
