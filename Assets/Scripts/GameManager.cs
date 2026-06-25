@@ -3,12 +3,20 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
+    [Header("# Game Objects")]
     public Player player;
     public PoolManager pool;
-    // 흐르는 게임 시간 - 난이도 계산용도
+    
+    [Header("# Game Controls")]
     public float gameTime;
-    // 최대 게임 시간 - 난이도 증가 기준
     public float maxGameTime;
+
+    [Header("# Player Data")]
+    public int level;
+    public int kill;
+    public int exp;
+    public int[] nextExp = { 3, 5, 10, 20, 150, 210, 280, 360, 450, 600 }; // 임시 레벨업 테이블
     
     private void Awake()
     {
@@ -24,6 +32,18 @@ public class GameManager : MonoBehaviour
         if (gameTime > maxGameTime)
         {
             gameTime = maxGameTime;
+        }
+    }
+    
+    // 경험치 획득 및 레벨업 로직
+    public void GetExp()
+    {
+        exp++;
+
+        if (exp == nextExp[level])
+        {
+            level++;
+            exp = 0;
         }
     }
 }
