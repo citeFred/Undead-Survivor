@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -28,6 +29,8 @@ public class Enemy : MonoBehaviour
     // flipX를 통한 적 좌우 반전용
     SpriteRenderer spriter;
 
+    // 코루틴에서 쓸 "한 물리 프레임 대기"
+    private WaitForFixedUpdate wait;
 
     void Awake()
     {
@@ -35,6 +38,7 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        wait = new WaitForFixedUpdate();
     }
 
     // OnEnable: 객체가 활성화 될 때마다 호출
@@ -51,6 +55,10 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 죽은 상태(!isLive) 히트 상태(넉백 중)인 상태에는 아래 추적 이동을 멈춤
+        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+            return;
+        
         // 1. 방향 구하기 (목표위치 - 내 위치) -> 플레이어쪽을 바라보는 벡터
         Vector2 dirVec = target.position - rigid.position;
         
@@ -70,6 +78,7 @@ public class Enemy : MonoBehaviour
         spriter.flipX = target.position.x < rigid.position.x;
     }
 
+    // 트리거에 무언가 닿으면 호출
     void OnTriggerEnter2D(Collider2D collision)
     {
         // 총알(Bullet 태그) 에 맞은 경우에 처리하기 위한 필터(벽, 플레이어 등 무시)
@@ -82,6 +91,8 @@ public class Enemy : MonoBehaviour
         if (health > 0)
         {
             // 피격 반응 추가
+            anim.SetTrigger("Hit"); // Animator의 Hit 발동 -> Hit 애니메이션 클립 재생
+            StartCoroutine(KnockBack()); // 넉백 코루틴 실행
         }
         else
         {
@@ -102,5 +113,17 @@ public class Enemy : MonoBehaviour
         speed = data.speed;
         maxHealth = data.health;
         health = data.health;
+    }
+    
+    // KnockBack : 맞는 순간 물리적으로 밀려나는 코루틴
+    IEnumerator KnockBack()
+    {
+        yield return wait; // 다음 물리 프레임까지 1프레임을 대기
+        
+        // 플레이어 반대방향으로 = 나(Enemy) 위치 - 플레이어 위치
+        Vector3 playerPos = GameManager.instance.player.transform.position;
+        Vector3 dirVec = transform.position - playerPos;
+        // 그 방향으로 순간 물리 충격(Impulse)를 가함
+        rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
     }
 }
