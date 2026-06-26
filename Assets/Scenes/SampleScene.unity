@@ -9158,7 +9158,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6.945
+  orthographic size: 8.574074
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9203,8 +9203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
   m_ComponentVersion: 1
   m_AssetsPPU: 18
-  m_RefResolutionX: 320
-  m_RefResolutionY: 180
+  m_RefResolutionX: 135
+  m_RefResolutionY: 270
   m_CropFrame: 0
   m_GridSnapping: 0
   m_FilterMode: 0
@@ -14334,6 +14334,12 @@ MonoBehaviour:
   pool: {fileID: 225987678}
   gameTime: 0
   maxGameTime: 40
+  level: 0
+  kill: 0
+  exp: 0
+  nextExp: 03000000050000000a0000001400000096000000d20000001801000068010000c201000058020000
+  health: 0
+  maxHealth: 100
 --- !u!4 &1907223003
 Transform:
   m_ObjectHideFlags: 0
