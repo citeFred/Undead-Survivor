@@ -10,21 +10,14 @@ public class Weapon : MonoBehaviour
     public int count; // 근접: 칼날 개수 / 원거리: 관통 횟수
     public float speed; // 근접: 회전 속도 / 원거리: 연사 속도
 
-    private float timer; // 원거리 발사 타이머
-    private Player player; // player.Scanner 대상에 접근하기 위함
+    float timer; // 원거리 발사 타이머
+    Player player; // player.Scanner 대상에 접근하기 위함
 
 
     void Awake()
     {
         // 부모 객체인 Player 컴포넌트 가져오기 (Weapon은 Player 자식)
-        player = GetComponentInParent<Player>();
-    }
-    
-    // 메모리에 올라 갈 때 처음 1회 자동 호출
-    void Start()
-    {
-        // 무기 인스턴스가 만들어지면 자동 초기화
-        Init();
+        player = GameManager.instance.player;
     }
 
     // Uptate() 매 프레임당 호출 - 입력, 회전 등 일반 로직
@@ -41,7 +34,7 @@ public class Weapon : MonoBehaviour
             case 1:
                 // 타이머가 연사 간격(speed)를 넘으면 발사
                 timer += Time.deltaTime;
-                if (timer >= speed)
+                if (timer > speed)
                 {
                     timer = 0;
                     Fire();
@@ -52,8 +45,29 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void Init()
+    public void Init(ItemData data)
     {
+        // 기본 정보 세팅
+        name = "Weapon " + data.itemId; // 오브젝트 이름 (Weapon 1, 2)
+        transform.parent = player.transform; // 플레이어 자식으로 등록(따라다니게)
+        transform.localPosition = Vector3.zero; // 플레이어 기준 원점 배치
+        
+        // 능력치 세팅
+        id = data.itemId;
+        damage = data.baseDamage;
+        count = data.baseCount;
+        
+        // 투사체 프리팹 설정
+        // 데이터안의 투사체 프리팹이 풀의 몇번째 인덱스인지 지정
+        for (int index = 0; index < GameManager.instance.pool.prefabs.Length; index++)
+        {
+            if (data.projectile == GameManager.instance.pool.prefabs[index])
+            {
+                prefabId = index;
+                break;
+            }
+        }
+        
         // 무기 종류별 초기 세팅
         switch (id)
         {
@@ -68,6 +82,19 @@ public class Weapon : MonoBehaviour
                 break;
         }
     }
+    
+    public void LevelUp(float damage, int count)
+    {
+        this.damage = damage;
+        this.count = count;
+
+        // 근접 무기는 칼날 개수 재배치
+        if (id == 0)
+        {
+            Arrange();
+        }
+    }
+    
 
     // 칼날을 풀에서 꺼내서 플레이어 주위에 원형으로 균등 배치
     void Arrange()
@@ -75,11 +102,19 @@ public class Weapon : MonoBehaviour
         // 칼날 Count 개를 풀에서 꺼냄
         for (int index = 0; index < count; index++)
         {
+            Transform bullet;
+
             // 풀에서 칼날(Bullet) 꺼내서 Transform 확보
-            Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
+            if (index < transform.childCount)
+            {
+                bullet = transform.GetChild(index); // 기존 칼날 재활용
+            }
+            else
+            {
+                bullet = GameManager.instance.pool.Get(prefabId).transform; // 새칼날
+                bullet.parent = transform; // Weapon 자식 등록
+            }
             
-            // Weapon의 자식으로 -> 플레이어를 따라다니면서 회전
-            bullet.parent = transform;
             // 부모 기준 위치, 회전 초기화 (재사용 시 이전값을 제거)
             bullet.localPosition = Vector3.zero;
             bullet.localRotation = Quaternion.identity;
