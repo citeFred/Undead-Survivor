@@ -81,6 +81,10 @@ public class Weapon : MonoBehaviour
             default:
                 break;
         }
+        
+        // 새 무기가 생성될 때, 이미 강화된 기어 효과(공속 등)이 이 무기에도 적용되도록 메시징 전달
+        // 받을 기어가 없는 경우 에러 안나도록 DontRequireReceiver 선택
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
     
     public void LevelUp(float damage, int count)
@@ -93,6 +97,8 @@ public class Weapon : MonoBehaviour
         {
             Arrange();
         }
+        // 강화된 무기 위에 기어 효과를 다시 입힘
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
     
 
