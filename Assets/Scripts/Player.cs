@@ -6,19 +6,18 @@ public class Player : MonoBehaviour
 {
     // 방향 키 입력 받는 벡터 ( x= 좌우, y= 상하)
     public Vector2 inputVec;
-    
     // 이동 속도
     public float speed;
-    
     // 가장 가까운 적을 찾는 스캐너
     public Scanner scanner;
-    
     // 객체가 가진 물리 컴포넌트
     Rigidbody2D rigid;
     // 스프라이트 렌더러 컴포넌트
     SpriteRenderer spriter;
     // 애니메이션 상태 제어 컴포넌트
     Animator anim;
+    // 무기를 드는 양손(왼/오)
+    public Hand[] hands;
 
     void Awake()
     {
@@ -26,6 +25,9 @@ public class Player : MonoBehaviour
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         scanner = GetComponent<Scanner>();
+        // 자식의 Hand들을 가져옴, 인자 true -> 비활성 손도 포함해서 가져오게됨
+        // (손은 평소엔 비활성 상태였다가 무기가 생기면 활성, 비활성 상태도 미리 배열에 담기 위함)
+        hands = GetComponentsInChildren<Hand>(true);
     }
     
     // FixedUpdate: 물리 이동은 이곳에서
