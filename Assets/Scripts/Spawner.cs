@@ -21,6 +21,9 @@ public class Spawner : MonoBehaviour
     
     void Update()
     {
+        if (!GameManager.instance.isLive) // 일시 정지 상태에서는 중단
+            return;
+        
         // 매 프레임마다 경과 시간 누적
         timer += Time.deltaTime;
         
