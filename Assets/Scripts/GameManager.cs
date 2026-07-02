@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
         isLive = true;
         uiLevelUp.Select(0); // 기본 무기 (0:삽) 제공
         health = maxHealth; // 게임 시작시 체력을 최대체력으로 초기화
+        Resume();
     }
 
     // 플레이어 사망시 호출
