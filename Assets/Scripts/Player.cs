@@ -63,4 +63,25 @@ public class Player : MonoBehaviour
     {
         GUI.Label(new Rect(10, 10, 300, 20), inputVec.ToString());
     }
+
+    // OnCollisionStay2D : 충돌이 지속되는 동안 매 프레임 호출
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (!GameManager.instance.isLive) // 일시 정지 상태에서는 중단
+            return;
+        // 프레임과 무관하게 1초당 일정량 감소하도록
+        GameManager.instance.health -= 10 * Time.deltaTime;
+
+        if (GameManager.instance.health <= 0)
+        {
+            // 자식 오브젝트를 돌면서 2번부터 비활성화
+            for (int index = 2; index < transform.childCount; index++)
+            {
+                transform.GetChild(index).gameObject.SetActive(false);
+            }
+            
+            anim.SetTrigger("Dead"); // 묘비 애니메이션 재생
+            GameManager.instance.GameOver();
+        }
+    }
 }
